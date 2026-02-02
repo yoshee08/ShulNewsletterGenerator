@@ -12,8 +12,8 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #faf8f3;
       margin: 0;
       padding: 20px;
       min-height: 100vh;
@@ -29,49 +29,54 @@
     }
 
     h1 {
-      color: white;
+      color: #5d4a3a;
       text-align: center;
       font-size: 2.5em;
       margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      font-weight: 600;
       grid-column: 1 / -1;
     }
 
     form {
-      background-color: #fff;
+      background-color: #ffffff;
       padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(139, 115, 85, 0.08);
+      border: 1px solid #e8e0d5;
     }
 
     #right-sidebar {
-      background-color: #fff;
+      background-color: #ffffff;
       padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(139, 115, 85, 0.08);
+      border: 1px solid #e8e0d5;
       position: sticky;
       top: 20px;
     }
 
     #right-sidebar h3 {
       margin-top: 0;
-      color: #667eea;
+      color: #8b7355;
       font-size: 1.2em;
+      font-weight: 600;
     }
 
     #right-sidebar p {
       font-size: 0.9em;
       line-height: 1.6;
-      color: #666;
+      color: #6b5d52;
     }
 
     #right-sidebar a {
-      color: #667eea;
+      color: #8b7355;
       text-decoration: none;
+      font-weight: 500;
     }
 
     #right-sidebar a:hover {
       text-decoration: underline;
+      color: #6d5b45;
     }
 
     /* Responsive layout */
@@ -88,13 +93,14 @@
     /* Section headers */
     .section-header {
       font-size: 1.4em;
-      color: #333;
+      color: #5d4a3a;
       margin: 30px 0 20px 0;
       padding-bottom: 10px;
-      border-bottom: 3px solid #667eea;
+      border-bottom: 2px solid #e8e0d5;
       display: flex;
       align-items: center;
       gap: 10px;
+      font-weight: 600;
     }
 
     .section-header:first-of-type {
@@ -103,8 +109,8 @@
 
     .section-header::before {
       content: '▶';
-      color: #667eea;
-      font-size: 0.8em;
+      color: #a89279;
+      font-size: 0.7em;
     }
 
     /* Checkbox grid */
@@ -114,8 +120,9 @@
       gap: 12px;
       margin-bottom: 30px;
       padding: 20px;
-      background-color: #f8f9ff;
-      border-radius: 12px;
+      background-color: #f5f2ed;
+      border-radius: 8px;
+      border: 1px solid #e8e0d5;
     }
 
     .checkbox-wrapper {
@@ -134,45 +141,46 @@
       padding: 12px 16px;
       cursor: pointer;
       font-size: 15px;
-      color: #333;
+      color: #5d4a3a;
       background-color: white;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+      border: 1px solid #d9cfc0;
+      border-radius: 6px;
+      transition: all 0.2s ease;
       user-select: none;
     }
 
     .checkbox-wrapper label:hover {
-      border-color: #667eea;
-      background-color: #f0f4ff;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+      border-color: #8b7355;
+      background-color: #fdfbf8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(139, 115, 85, 0.15);
     }
 
     .checkbox-wrapper label::before {
       content: '';
       display: inline-block;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       margin-right: 12px;
-      border: 2px solid #667eea;
-      border-radius: 4px;
+      border: 2px solid #c4b5a3;
+      border-radius: 3px;
       background-color: white;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       flex-shrink: 0;
     }
 
     .checkbox-wrapper input[type="checkbox"]:checked + label {
-      border-color: #667eea;
-      background-color: #e8edff;
-      color: #667eea;
-      font-weight: 600;
+      border-color: #8b7355;
+      background-color: #faf6f1;
+      color: #5d4a3a;
+      font-weight: 500;
     }
 
     .checkbox-wrapper input[type="checkbox"]:checked + label::before {
-      background-color: #667eea;
+      background-color: #8b7355;
+      border-color: #8b7355;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-      background-size: 16px;
+      background-size: 14px;
       background-position: center;
       background-repeat: no-repeat;
     }
@@ -204,20 +212,22 @@
     input[type="number"] {
       width: 100%;
       padding: 12px 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
+      border: 1px solid #d9cfc0;
+      border-radius: 6px;
       font-size: 15px;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      background-color: #fdfbf8;
     }
 
     input:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: #8b7355;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
     }
 
     input.error {
-      border-color: #e53e3e;
+      border-color: #c97064;
       background-color: #fff5f5;
     }
 
@@ -226,24 +236,26 @@
       margin-top: 6px;
       padding: 6px 12px;
       font-size: 13px;
-      color: #667eea;
-      background-color: #e8edff;
-      border-radius: 6px;
+      color: #8b7355;
+      background-color: #faf6f1;
+      border-radius: 4px;
       font-weight: 500;
+      border: 1px solid #e8e0d5;
     }
 
     .date-helper.today {
-      color: #48bb78;
-      background-color: #f0fff4;
+      color: #6b8e4e;
+      background-color: #f4f8f0;
+      border-color: #d9e5d0;
     }
 
     /* Nested inputs */
     .nested-input-group {
       margin: 20px 0;
       padding: 20px;
-      background-color: #f8f9ff;
-      border-left: 4px solid #667eea;
-      border-radius: 8px;
+      background-color: #faf6f1;
+      border-left: 3px solid #8b7355;
+      border-radius: 6px;
       display: none;
       animation: slideDown 0.3s ease;
     }
@@ -271,19 +283,21 @@
     textarea {
       width: 100%;
       padding: 12px 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
+      border: 1px solid #d9cfc0;
+      border-radius: 6px;
       font-size: 15px;
       font-family: inherit;
       resize: vertical;
       min-height: 100px;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      background-color: #fdfbf8;
     }
 
     textarea:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: #8b7355;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
     }
 
     .textarea-wrapper {
@@ -299,23 +313,24 @@
     /* Button */
     button[type="submit"] {
       width: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-color: #8b7355;
       color: white;
       padding: 16px 32px;
       border: none;
-      border-radius: 8px;
-      font-size: 18px;
+      border-radius: 6px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       margin-top: 30px;
     }
 
     button[type="submit"]:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      background-color: #6d5b45;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139, 115, 85, 0.25);
     }
 
     button[type="submit"]:active {
@@ -334,11 +349,74 @@
       color: #666;
       margin-top: 4px;
     }
+
+    /* Mincha toggle styles */
+    .mincha-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      background-color: #f5f2ed;
+      padding: 4px;
+      border-radius: 6px;
+      border: 1px solid #e8e0d5;
+    }
+
+    .toggle-option {
+      flex: 1;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .toggle-option input[type="radio"] {
+      display: none;
+    }
+
+    .toggle-option span {
+      display: block;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b5d52;
+      background-color: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .toggle-option input[type="radio"]:checked + span {
+      background-color: #8b7355;
+      color: white;
+      font-weight: 500;
+    }
+
+    .toggle-option:hover span {
+      background-color: rgba(139, 115, 85, 0.1);
+    }
+
+    .toggle-option input[type="radio"]:checked + span:hover {
+      background-color: #6d5b45;
+    }
+
+    .mincha-input-container {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Newsletter Generator - Shabbat Zmanim</h1>
+    <h1>Shul Newsletter Generator - Shabbos Zmanim</h1>
     
     <!-- Zmanim Form -->
     <form id="zmanim-form" action="newsletter.php" method="post">
@@ -354,7 +432,7 @@
         
         <div class="checkbox-wrapper">
           <input type="checkbox" id="shiurCheckbox" name="shiurCheckbox">
-          <label for="shiurCheckbox">D'var Torah</label>
+          <label for="shiurCheckbox">Shiur</label>
         </div>
         
         <div class="checkbox-wrapper">
@@ -443,8 +521,29 @@
 
         <div class="input-group">
           <label for="shabbosMinchaInput">Shabbos Mincha:</label>
-          <input type="number" id="shabbosMinchaInput" value="40" name="shabbosMinchaInput" min="1" max="90">
-          <span class="helper-text">Minutes before Shkia</span>
+          
+          <!-- Toggle for Mincha type -->
+          <div class="mincha-toggle">
+            <label class="toggle-option">
+              <input type="radio" name="minchaType" value="before" id="minchaTypeBefore" checked>
+              <span>Minutes before Shkia</span>
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="minchaType" value="settime" id="minchaTypeSetTime">
+              <span>Set Time</span>
+            </label>
+          </div>
+
+          <!-- Minutes before Shkia input -->
+          <div id="minchaBeforeContainer" class="mincha-input-container">
+            <input type="number" id="shabbosMinchaInput" value="40" name="shabbosMinchaInput" min="1" max="90">
+            <span class="helper-text">Minutes before Shkia</span>
+          </div>
+
+          <!-- Set time input -->
+          <div id="minchaSetTimeContainer" class="mincha-input-container" style="display: none;">
+            <input type="time" id="shabbosMinchaTimeInput" name="shabbosMinchaTimeInput" value="17:00">
+          </div>
         </div>
       </div>
 
@@ -591,12 +690,52 @@
           this.classList.add('error');
           dateHelper.textContent = "⚠️ Please select a Friday";
           dateHelper.className = "date-helper";
-          dateHelper.style.color = "#e53e3e";
+          dateHelper.style.color = "#c97064";
           dateHelper.style.backgroundColor = "#fff5f5";
+          dateHelper.style.borderColor = "#f5d6d0";
         } else {
           this.classList.remove('error');
           const isToday = selectedDate.getTime() === today.getTime();
           updateDateHelper(isToday);
+        }
+      });
+
+      // Mincha type toggle
+      const minchaTypeBefore = document.getElementById('minchaTypeBefore');
+      const minchaTypeSetTime = document.getElementById('minchaTypeSetTime');
+      const minchaBeforeContainer = document.getElementById('minchaBeforeContainer');
+      const minchaSetTimeContainer = document.getElementById('minchaSetTimeContainer');
+
+      function updateMinchaDisplay() {
+        if (minchaTypeBefore.checked) {
+          minchaBeforeContainer.style.display = 'block';
+          minchaSetTimeContainer.style.display = 'none';
+        } else {
+          minchaBeforeContainer.style.display = 'none';
+          minchaSetTimeContainer.style.display = 'block';
+        }
+      }
+
+      minchaTypeBefore.addEventListener('change', updateMinchaDisplay);
+      minchaTypeSetTime.addEventListener('change', updateMinchaDisplay);
+
+      // Apply stored mincha type preference
+      const storedMinchaType = localStorage.getItem('minchaType');
+      if (storedMinchaType === 'settime') {
+        minchaTypeSetTime.checked = true;
+      }
+      updateMinchaDisplay();
+
+      // Store mincha type preference
+      minchaTypeBefore.addEventListener('change', function() {
+        if (this.checked) {
+          localStorage.setItem('minchaType', 'before');
+        }
+      });
+
+      minchaTypeSetTime.addEventListener('change', function() {
+        if (this.checked) {
+          localStorage.setItem('minchaType', 'settime');
         }
       });
 
@@ -658,6 +797,7 @@
         'shabbosShachrisInput',
         'shabbosLearningInput',
         'shabbosMinchaInput',
+        'shabbosMinchaTimeInput',
         'halachaShiurHeaderInput',
         'halachaShiurTimeInput',
         'naviMinutesInput'
