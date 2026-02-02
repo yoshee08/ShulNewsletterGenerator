@@ -224,42 +224,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <h2 id="parshaHeader" contenteditable="true"></h2>
 
       <?php if ($includeParsha && $parshaSummary !== ""): ?>
-        <p contenteditable="true"><?php echo htmlspecialchars($parshaSummary, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $parshaSummary; ?></p>
       <?php endif; ?>
 
       <?php if ($includeMazeltovs && $mazeltovs !== ""): ?>
         <h2 id="mazeltovsHeader" contenteditable="true">Mazel Tov's!</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($mazeltovs, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $mazeltovs; ?></p>
       <?php endif; ?>
 
       <?php if ($includeEvents && $events !== ""): ?>
         <h2 id="eventsHeader" contenteditable="true">Weekly Events</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($events, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $events; ?></p>
       <?php endif; ?>
 
       <?php if ($includeKollel && $kollel !== ""): ?>
         <h2 id="kollelHeader" contenteditable="true">Kollel</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($kollel, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $kollel; ?></p>
       <?php endif; ?>
 
       <?php if ($includeAvosubanim && $avosubanim !== ""): ?>
         <h2 id="avosubanimHeader" contenteditable="true">Avos U'banim</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($avosubanim, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $avosubanim; ?></p>
       <?php endif; ?>
 
       <?php if ($includeBnos && $bnos !== ""): ?>
         <h2 id="bnosHeader" contenteditable="true">Bnos</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($bnos, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $bnos; ?></p>
       <?php endif; ?>
 
       <?php if ($includeKiddush && $kiddush !== ""): ?>
         <h2 id="kiddushHeader" contenteditable="true">Kiddush</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($kiddush, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p contenteditable="true"><?php echo $kiddush; ?></p>
       <?php endif; ?>
 
       <?php if ($includeShiur && $shiur !== ""): ?>
-        <h2 id="rabbisdesk" contenteditable="true">From the Rabbi's Desk</h2>
-        <p contenteditable="true"><?php echo htmlspecialchars($shiur, ENT_QUOTES, 'UTF-8'); ?></p>
+        <h2 id="rabbisdesk" contenteditable="true">D'var Torah</h2>
+        <p contenteditable="true"><?php echo $shiur; ?></p>
       <?php endif; ?>
     </article>
 
@@ -434,7 +434,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (el) el.style.display = 'none';
           }
 
-          setHTML('minchaTimeShabbat', `Mincha(No Shalashudis): ${zmanimShabbos.minchaTimeShabbat}`);
+          setHTML('minchaTimeShabbat', `Mincha: ${zmanimShabbos.minchaTimeShabbat}`);
 
           // Parsha header
           let parshaLine = `${shabbatData.parshaItem || ""}`.trim();
