@@ -7,180 +7,529 @@
   <link rel="stylesheet" href="includes/tinymce/js/tinymce/skins/content/default/content.min.css">
   <title>Newsletter Generator - Shabbat Zmanim</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       margin: 0;
       padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 20px;
+      align-items: start;
     }
 
     h1 {
-      color: #333;
+      color: white;
       text-align: center;
       font-size: 2.5em;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      grid-column: 1 / -1;
     }
 
     form {
       background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      max-width: 800px;
-      margin: 0 auto;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     }
 
-/* Add some basic styling to the input groups */
-.input-group {
-  margin-bottom: 20px;
-}
+    #right-sidebar {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 20px;
+    }
 
-.nested-input-group {
-  margin-left: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-}
+    #right-sidebar h3 {
+      margin-top: 0;
+      color: #667eea;
+      font-size: 1.2em;
+    }
 
-/* Style labels for better readability */
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #333;
-}
+    #right-sidebar p {
+      font-size: 0.9em;
+      line-height: 1.6;
+      color: #666;
+    }
 
-/* Add some spacing to the nested labels */
-.nested-input-group label {
-  margin-left: 10px;
-  color: #555;
-}
+    #right-sidebar a {
+      color: #667eea;
+      text-decoration: none;
+    }
 
-/* Adjust input styling for better alignment */
-input {
-  width: 100%;
-  padding: 12px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s ease-in-out;
-}
+    #right-sidebar a:hover {
+      text-decoration: underline;
+    }
 
-/* Add focus styles for a sleek appearance */
-input:focus {
-  outline: none;
-  border-color: #6c63ff;
-  box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
-}
+    /* Responsive layout */
+    @media screen and (max-width: 1000px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
 
-/* Style the submit button */
-button {
-  background-color: #6c63ff;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
+      #right-sidebar {
+        position: static;
+      }
+    }
 
-button:hover {
-  background-color: #554fd8;
-}
+    /* Section headers */
+    .section-header {
+      font-size: 1.4em;
+      color: #333;
+      margin: 30px 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #667eea;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-    textarea {
-      padding: 10px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      border: 1px solid #aaa;
-      border-radius: 6px;
+    .section-header:first-of-type {
+      margin-top: 0;
+    }
+
+    .section-header::before {
+      content: '▶';
+      color: #667eea;
+      font-size: 0.8em;
+    }
+
+    /* Checkbox grid */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #f8f9ff;
+      border-radius: 12px;
+    }
+
+    .checkbox-wrapper {
+      position: relative;
+    }
+
+    .checkbox-wrapper input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-wrapper label {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      color: #333;
+      background-color: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .checkbox-wrapper label:hover {
+      border-color: #667eea;
+      background-color: #f0f4ff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+    }
+
+    .checkbox-wrapper label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      border: 2px solid #667eea;
+      border-radius: 4px;
+      background-color: white;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .checkbox-wrapper input[type="checkbox"]:checked + label {
+      border-color: #667eea;
+      background-color: #e8edff;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .checkbox-wrapper input[type="checkbox"]:checked + label::before {
+      background-color: #667eea;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Input groups */
+    .input-group {
+      margin-bottom: 24px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="date"],
+    input[type="time"],
+    input[type="number"] {
       width: 100%;
-      font-size: 1em;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input.error {
+      border-color: #e53e3e;
+      background-color: #fff5f5;
+    }
+
+    .date-helper {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      color: #667eea;
+      background-color: #e8edff;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .date-helper.today {
+      color: #48bb78;
+      background-color: #f0fff4;
+    }
+
+    /* Nested inputs */
+    .nested-input-group {
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #f8f9ff;
+      border-left: 4px solid #667eea;
+      border-radius: 8px;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .nested-input-group.visible {
       display: block;
     }
 
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nested-input-group label {
+      color: #555;
+    }
+
+    /* Textarea styling */
+    textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 100px;
+      transition: all 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .textarea-wrapper {
+      margin-bottom: 24px;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .textarea-wrapper.visible {
+      display: block;
+    }
+
+    /* Button */
+    button[type="submit"] {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 30px;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+    }
 
     hr {
-      margin: 15px 0;
+      margin: 30px 0;
       border: none;
-      border-top: 2px solid #ccc;
+      border-top: 2px solid #e0e0e0;
     }
 
-    .form-group {
-      display: flex;
-      margin-bottom: 15px;
+    /* Helper text */
+    .helper-text {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
     }
-
-    .form-group input,
-    .form-group select {
-      margin-bottom: 0;
-    }
-
-    .nested-input {
-      display: flex;
-      flex-direction: column;
-      margin-top: 15px;
-    }
-
-    .tinymce {
-      width: 100%;
-      font-size: 1em;
-    }
-
-    .hidden {
-      display: none;
-    }
-	
-	  .checkbox-group input[type="checkbox"] {
-    display: none;
-    margin-bottom: 8px;
-  }
-
-  .checkbox-group label {
-    position: relative;
-    padding-left: 30px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    line-height: 20px;
-    display: inline-block;
-    margin-bottom: 8px;
-  }
-
-  .checkbox-group label:before {
-       content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      border: 2px solid #4caf50;
-      background-color: #fff;
-      border-radius: 50%;
-      transition: background-color 0.3s;
-  }
-
-  .checkbox-group input[type="checkbox"]:checked+label:before {
-    background-color: #4caf50;
-    border: 2px solid #45a049;
-  }
-
-  .checkbox-group label:hover:before {
-    background-color: #e0e0e0;
-  }
-
-  .checkbox-group input[type="checkbox"]:checked+label:hover:before {
-    background-color: #45a049;
-  }
-
-  .checkbox-group input[type="checkbox"]:checked+label {
-    color: #184183;
-  }
   </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Newsletter Generator - Shabbat Zmanim</h1>
+    
+    <!-- Zmanim Form -->
+    <form id="zmanim-form" action="newsletter.php" method="post">
+      
+      <div class="section-header">Options to Include</div>
+      
+      <!-- Checkbox Grid -->
+      <div class="checkbox-grid">
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="naviCheckbox" name="naviCheckbox">
+          <label for="naviCheckbox">Navi</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="shiurCheckbox" name="shiurCheckbox">
+          <label for="shiurCheckbox">D'var Torah</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="parshaCheckbox" name="parshaCheckbox">
+          <label for="parshaCheckbox">Parsha</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="halachaCheckbox" name="halachaCheckbox">
+          <label for="halachaCheckbox">Shabbos Shiur</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="mazeltovCheckbox" name="mazeltovCheckbox">
+          <label for="mazeltovCheckbox">Mazel Tovs</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="eventsCheckbox" name="eventsCheckbox">
+          <label for="eventsCheckbox">Events</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="kiddushCheckbox" name="kiddushCheckbox">
+          <label for="kiddushCheckbox">Kiddush</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="bnosCheckbox" name="bnosCheckbox">
+          <label for="bnosCheckbox">Bnos</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="avosubanimCheckbox" name="avosubanimCheckbox">
+          <label for="avosubanimCheckbox">Avos U'banim</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="kollelCheckbox" name="kollelCheckbox">
+          <label for="kollelCheckbox">Kollel</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="eiruvCheckbox" name="eiruvCheckbox">
+          <label for="eiruvCheckbox">Eiruv is UP</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="shabbosLearningCheckbox" name="shabbosLearningCheckbox">
+          <label for="shabbosLearningCheckbox">Shabbos Learning</label>
+        </div>
+        
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="includeDafYomiCheckbox" name="includeDafYomiCheckbox">
+          <label for="includeDafYomiCheckbox">Daf Yomi</label>
+        </div>
+      </div>
+
+      <div class="section-header">Basic Settings</div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="logoUrl">Logo URL:</label>
+          <input type="url" id="logoUrl" name="logoUrl" placeholder="https://example.com/logo.png">
+        </div>
+
+        <div class="input-group">
+          <label for="zipInput">Zip Code:</label>
+          <input type="text" id="zipInput" value="10931" name="zipInput" placeholder="10931">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="date">Shabbat Date (Friday):</label>
+        <input type="date" id="date" name="date" required>
+        <span id="dateHelper" class="date-helper"></span>
+      </div>
+
+      <div class="section-header">Time Settings</div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="shabbosShachrisInput">Shabbos Shachris:</label>
+          <input type="time" id="shabbosShachrisInput" value="08:30" name="shabbosShachrisInput">
+        </div>
+
+        <div class="input-group">
+          <label for="shabbosMinchaInput">Shabbos Mincha:</label>
+          <input type="number" id="shabbosMinchaInput" value="40" name="shabbosMinchaInput" min="1" max="90">
+          <span class="helper-text">Minutes before Shkia</span>
+        </div>
+      </div>
+
+      <!-- Conditional inputs -->
+      <div class="nested-input-group" id="shabbosLearningTime">
+        <label for="shabbosLearningInput">Shabbos Learning Time:</label>
+        <input type="time" id="shabbosLearningInput" name="shabbosLearningInput">
+      </div>
+
+      <div class="nested-input-group" id="halachaMinutes">
+        <div class="input-group">
+          <label for="halachaShiurHeaderInput">Shabbos Shiur Name:</label>
+          <input type="text" id="halachaShiurHeaderInput" value="Halacha Shiur" name="halachaShiurHeaderInput">
+        </div>
+        
+        <div class="input-group">
+          <label for="halachaShiurTimeInput">Shabbos Shiur Time:</label>
+          <input type="time" id="halachaShiurTimeInput" value="16:45" name="halachaShiurTimeInput">
+        </div>
+      </div>
+
+      <div class="nested-input-group" id="naviMinutes">
+        <label for="naviMinutesInput">Navi - Minutes before Maariv:</label>
+        <input type="number" id="naviMinutesInput" value="25" name="naviMinutesInput" min="5" max="60">
+        <span class="helper-text">Rounded to nearest 5-minute mark</span>
+      </div>
+
+      <!-- Text areas for content -->
+      <div class="section-header">Content Sections</div>
+
+      <div class="textarea-wrapper" id="parshaSummary">
+        <label for="parshaSummaryText">Parsha Vort:</label>
+        <textarea class="tinymce" id="parshaSummaryText" name="parshaSummary"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="shiur">
+        <label for="shiurText">Shiur:</label>
+        <textarea class="tinymce" id="shiurText" name="shiur"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="mazeltov">
+        <label for="mazeltovText">Mazel Tov's:</label>
+        <textarea class="tinymce" id="mazeltovText" name="mazeltov"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="events">
+        <label for="eventsText">Events:</label>
+        <textarea class="tinymce" id="eventsText" name="events"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="kiddush">
+        <label for="kiddushText">Kiddush:</label>
+        <textarea class="tinymce" id="kiddushText" name="kiddush"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="kollel">
+        <label for="kollelText">Kollel:</label>
+        <textarea class="tinymce" id="kollelText" name="kollel"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="avosubanim">
+        <label for="avosubanimText">Avos U'banim:</label>
+        <textarea class="tinymce" id="avosubanimText" name="avosubanim"></textarea>
+      </div>
+
+      <div class="textarea-wrapper" id="bnos">
+        <label for="bnosText">B'Nos:</label>
+        <textarea class="tinymce" id="bnosText" name="bnos"></textarea>
+      </div>
+
+      <button type="submit">Generate Newsletter</button>
+    </form>
+    <!-- End Zmanim Form -->
+
+    <div id="right-sidebar">
+      <h3>About</h3>
+      <p>Credit for Zmanim data: This newsletter generator uses Zmanim data through the <a href="https://www.hebcal.com/home/developer-apis" target="_blank">hebcal.com API</a>.</p>
+      <p>For more details and to contribute to the open-source development, visit the <a href="https://github.com/yoshee08/shulnewslettergenerator" target="_blank">GitHub repository</a>.</p>
+      <p>If you encounter any issues, please email <a href="mailto:yoshee08@gmail.com">yoshee08@gmail.com</a>.</p>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      // Initialize TinyMCE
       tinymce.init({
         selector: 'textarea.tinymce',
         plugins: 'autoresize',
@@ -188,362 +537,146 @@ button:hover {
         menubar: true,
         promotion: false,
         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
-      }); 
-			  
-	        // Add an event listener to the date input
+      });
+
+      // Date handling - FIXED BUG: Friday is day 5, not 4!
       const dateInput = document.getElementById('date');
-      dateInput.addEventListener('input', function() {
-        const selectedDate = new Date(this.value);
+      const dateHelper = document.getElementById('dateHelper');
+
+      function getDefaultDate() {
+        const today = new Date();
+        const dayOfWeek = today.getDay();
+
+        // Check if today is Friday (day index 5, NOT 4!)
+        if (dayOfWeek === 5) {
+          return {
+            date: today,
+            isToday: true
+          };
+        } else {
+          // Calculate days until next Friday
+          const daysUntilFriday = (5 - dayOfWeek + 7) % 7 || 7;
+          const nextFriday = new Date(today);
+          nextFriday.setDate(today.getDate() + daysUntilFriday);
+          return {
+            date: nextFriday,
+            isToday: false
+          };
+        }
+      }
+
+      // Set default date
+      const defaultDateInfo = getDefaultDate();
+      dateInput.value = defaultDateInfo.date.toISOString().split('T')[0];
+      updateDateHelper(defaultDateInfo.isToday);
+
+      function updateDateHelper(isToday) {
+        if (isToday) {
+          dateHelper.textContent = "Today is Friday! ✓";
+          dateHelper.className = "date-helper today";
+        } else {
+          dateHelper.textContent = "Next Friday selected";
+          dateHelper.className = "date-helper";
+        }
+      }
+
+      // Validate date selection without annoying popups
+      dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
         
-        // Check if the selected date is a Friday (day index 5)
-        if (selectedDate.getDay() !== 4) {
-          alert('Please select a Friday date for accurate Zmanim.');
-          this.value = ''; // Clear the input value
+        // Check if selected date is a Friday (day 5, NOT 4!)
+        if (selectedDate.getDay() !== 5) {
+          this.classList.add('error');
+          dateHelper.textContent = "⚠️ Please select a Friday";
+          dateHelper.className = "date-helper";
+          dateHelper.style.color = "#e53e3e";
+          dateHelper.style.backgroundColor = "#fff5f5";
+        } else {
+          this.classList.remove('error');
+          const isToday = selectedDate.getTime() === today.getTime();
+          updateDateHelper(isToday);
         }
       });
-	  
-		// Function to get the default date based on whether today is Friday
-	  function getDefaultDate() {
-		const today = new Date();
 
-		// Check if today is Friday (day index 5)
-		if (today.getDay() === 5) {
-		  // If today is Friday, set the default value to today
-		  return today.toISOString().split('T')[0];
-		} else {
-		  // Calculate the next Friday's date
-		  const daysUntilFriday = 5 - today.getDay() + (today.getDay() > 4 ? 7 : 0);
-		  const nextFriday = new Date(today);
-		  nextFriday.setDate(today.getDate() + daysUntilFriday);
+      // Checkbox toggle handlers - Improved with event delegation
+      const checkboxMappings = {
+        'naviCheckbox': 'naviMinutes',
+        'halachaCheckbox': 'halachaMinutes',
+        'shabbosLearningCheckbox': 'shabbosLearningTime',
+        'parshaCheckbox': 'parshaSummary',
+        'shiurCheckbox': 'shiur',
+        'mazeltovCheckbox': 'mazeltov',
+        'eventsCheckbox': 'events',
+        'kiddushCheckbox': 'kiddush',
+        'kollelCheckbox': 'kollel',
+        'avosubanimCheckbox': 'avosubanim',
+        'bnosCheckbox': 'bnos'
+      };
 
-		  // Format the date in 'YYYY-MM-DD' format
-		  return nextFriday.toISOString().split('T')[0];
-		}
-	  }
-
-  // Set the default value of the date input
-  document.getElementById('date').value = getDefaultDate();
-
-	  
-	  const naviCheckbox = document.getElementById('naviCheckbox');
-      const naviMinutesInput = document.getElementById('naviMinutes');
-      // Add an event listener to the navi checkbox
-      naviCheckbox.addEventListener('change', function () {
-        // Show or hide the naviMinutes input based on the checkbox state
-        naviMinutesInput.style.display = this.checked ? '' : 'none';
+      // Set up checkbox listeners
+      Object.keys(checkboxMappings).forEach(checkboxId => {
+        const checkbox = document.getElementById(checkboxId);
+        const target = document.getElementById(checkboxMappings[checkboxId]);
+        
+        if (checkbox && target) {
+          checkbox.addEventListener('change', function() {
+            if (this.checked) {
+              target.classList.add('visible');
+            } else {
+              target.classList.remove('visible');
+            }
+            updateLocalStorage(this.id, this.checked);
+          });
+        }
       });
-	  
-	  
-	  // Halacha Checkbox
-	  const halachaCheckbox = document.getElementById('halachaCheckbox');
-      const halachaMinutesInput = document.getElementById('halachaMinutes');
-      // Add an event listener to the halacha checkbox
-      halachaCheckbox.addEventListener('change', function () {
-        // Show or hide the halachaMinutes input based on the checkbox state
-        halachaMinutesInput.style.display = this.checked ? '' : 'none';
-      });	  
-	  
-	  // Shabbos Learning Checkbox
-	  const shabbosLearningCheckbox = document.getElementById('shabbosLearningCheckbox');
-      const shabbosLearningInput = document.getElementById('shabbosLearningTime');
-      // Add an event listener to the shabbosLearning checkbox
-      shabbosLearningCheckbox.addEventListener('change', function () {
-        // Show or hide the shabbosLearning input based on the checkbox state
-        shabbosLearningInput.style.display = this.checked ? '' : 'none';
-      });	  
-	   
-	  // Parsha Checkbox
-	  const parshaCheckbox = document.getElementById('parshaCheckbox');
-	  const parshaInput = document.getElementById('parshaSummary');
 
-	  parshaCheckbox.addEventListener('change', function () {
-		parshaInput.style.display = this.checked ? 'block' : 'none';
-	  });
+      // LocalStorage management - Improved
+      function updateLocalStorage(key, value) {
+        localStorage.setItem(key, value);
+      }
 
-	  // Shiur Checkbox
-	  const shiurCheckbox = document.getElementById('shiurCheckbox');
-	  const shiurInput = document.getElementById('shiur');
+      function getFromLocalStorage(key, defaultValue = '') {
+        return localStorage.getItem(key) || defaultValue;
+      }
 
-	  shiurCheckbox.addEventListener('change', function () {
-		shiurInput.style.display = this.checked ? 'block' : 'none';
-	  });
-
-	  // Mazeltov Checkbox
-	  const mazeltovCheckbox = document.getElementById('mazeltovCheckbox');
-	  const mazeltovInput = document.getElementById('mazeltov');
-
-	  mazeltovCheckbox.addEventListener('change', function () {
-		mazeltovInput.style.display = this.checked ? 'block' : 'none';
-	  });
-
-	  // Events Checkbox
-	  const eventsCheckbox = document.getElementById('eventsCheckbox');
-	  const eventsInput = document.getElementById('events');
-
-	  eventsCheckbox.addEventListener('change', function () {
-		eventsInput.style.display = this.checked ? 'block' : 'none';
-	  });
-	  
-	  // Kiddush Checkbox
-	  const kiddushCheckbox = document.getElementById('kiddushCheckbox');
-	  const kiddushInput = document.getElementById('kiddush');
-
-	  kiddushCheckbox.addEventListener('change', function () {
-		kiddushInput.style.display = this.checked ? 'block' : 'none';
-	  });
-	  
-	  // Kollel Checkbox
-	  const kollelCheckbox = document.getElementById('kollelCheckbox');
-	  const kollelInput = document.getElementById('kollel');
-
-		kollelCheckbox.addEventListener('change', function () {
-			kollelInput.style.display = this.checked ? 'block' : 'none';
-		});
-
-		// Avos U'banim Checkbox
-		const avosubanimCheckbox = document.getElementById('avosubanimCheckbox');
-		const avosubanimInput = document.getElementById('avosubanim');
-
-		avosubanimCheckbox.addEventListener('change', function () {
-			avosubanimInput.style.display = this.checked ? 'block' : 'none';
-		});
-
-		// Bnos Checkbox
-		const bnosCheckbox = document.getElementById('bnosCheckbox');
-		const bnosInput = document.getElementById('bnos');
-
-		bnosCheckbox.addEventListener('change', function () {
-			bnosInput.style.display = this.checked ? 'block' : 'none';
-		});
-		
-		
-		
-
-    // store checkbox values in browser for future reference
-
-    // Function to update local storage with checkbox states
-    function updateCheckboxLocalStorage(checkbox) {
-      localStorage.setItem(checkbox.id, checkbox.checked.toString());
-    }
-
-    // Function to apply checkbox states from local storage
-    function applyCheckboxLocalStorage(checkbox) {
-      const storedValue = localStorage.getItem(checkbox.id);
-      checkbox.checked = storedValue === "true";
-    }
-
-    // Apply stored checkbox states on page load
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(function (checkbox) {
-      applyCheckboxLocalStorage(checkbox);
-      checkbox.addEventListener('change', function () {
-        updateCheckboxLocalStorage(checkbox);
+      // Apply stored checkbox states
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        const stored = localStorage.getItem(checkbox.id);
+        if (stored === 'true') {
+          checkbox.checked = true;
+          checkbox.dispatchEvent(new Event('change'));
+        }
       });
-    });
-	
-	
-	// store values that wont change weekly in browser
-	
-	    // Function to update local storage with input values
-    function updateInputLocalStorage(input) {
-      localStorage.setItem(input.id, input.value);
-    }
 
-    // Function to apply input values from local storage
-    function applyInputLocalStorage(input) {
-      const storedValue = localStorage.getItem(input.id);
-      input.value = storedValue || "";
-    }
+      // Apply stored input values
+      const persistentInputs = [
+        'logoUrl',
+        'zipInput',
+        'shabbosShachrisInput',
+        'shabbosLearningInput',
+        'shabbosMinchaInput',
+        'halachaShiurHeaderInput',
+        'halachaShiurTimeInput',
+        'naviMinutesInput'
+      ];
 
-    // Apply stored input values on page load
-    const inputsToStore = [
-      document.getElementById("logoUrl"),
-      document.getElementById("zipInput"),
-      document.getElementById("shabbosShachrisInput"),
-      document.getElementById("shabbosLearningInput"),
-      document.getElementById("shabbosMinchaInput"),
-      document.getElementById("halachaShiurHeaderInput"),
-      document.getElementById("halachaShiurTimeInput"),
-      document.getElementById("naviMinutesInput")
-    ];
-
-    inputsToStore.forEach(function (input) {
-      applyInputLocalStorage(input);
-      input.addEventListener('input', function () {
-        updateInputLocalStorage(input);
+      persistentInputs.forEach(inputId => {
+        const input = document.getElementById(inputId);
+        if (input) {
+          const stored = getFromLocalStorage(inputId);
+          if (stored && !input.value) {
+            input.value = stored;
+          }
+          
+          input.addEventListener('input', function() {
+            updateLocalStorage(this.id, this.value);
+          });
+        }
       });
-    });
-		
-	  
     });
   </script>
-</head>
-<body>
-  <h1>Newsletter Generator - Shabbat Zmanim</h1>
-  
-  <!-- Zmanim Form -->
-  <form id="zmanim-form" action="newsletter.php" method="post">
-  
-      <!-- Checkbox Group -->
-    <div class="checkbox-group">
-	  <input type="checkbox" id="naviCheckbox" name="naviCheckbox">
-      <label for="naviCheckbox">Include Navi</label>
-      	  
-	  <input type="checkbox" id="shiurCheckbox" name="shiurCheckbox">
-	  <label for="shiurCheckbox">Include Shiur</label>
-       
-	  <input type="checkbox" id="parshaCheckbox" name="parshaCheckbox">
-	  <label for="parshaCheckbox">Include Parsha</label>
-	  
-	  <input type="checkbox" id="halachaCheckbox" name="halachaCheckbox">
-	  <label for="halachaCheckbox">Include Shabbos Shiur</label>
-      
-	  <input type="checkbox" id="mazeltovCheckbox" name="mazeltovCheckbox">
-	  <label for="mazeltovCheckbox">Include Mazel Tovs</label>
-      
-	  <input type="checkbox" id="eventsCheckbox" name="eventsCheckbox">
-	  <label for="eventsCheckbox">Include Events</label>
-      
-	  <input type="checkbox" id="kiddushCheckbox" name="kiddushCheckbox">
-	  <label for="kiddushCheckbox">Include Kiddush</label>
-      
-	  <input type="checkbox" id="bnosCheckbox" name="bnosCheckbox">
-	  <label for="bnosCheckbox">Bnos</label>
-      
-	  <input type="checkbox" id="avosubanimCheckbox" name="avosubanimCheckbox">
-	  <label for="avosubanimCheckbox">Avos U'banim</label>
-      
-	  <input type="checkbox" id="kollelCheckbox" name="kollelCheckbox">
-	  <label for="kollelCheckbox">Kollel</label>
-	  
-	  <input type="checkbox" id="eiruvCheckbox" name="eiruvCheckbox">
-	  <label for="eiruvCheckbox">Eiruv is UP</label>
-	  
-	  <input type="checkbox" id="shabbosLearningCheckbox" name="shabbosLearningCheckbox">
-	  <label for="shabbosLearningCheckbox">Shabbos Learning</label>
-      
-	  
-	  
-    </div>
-	
-	<hr>
-	
-<div class="input-group">
-  <!-- Logo URL Input -->
-  <label for="logoUrl">Logo URL:</label>
-  <input type="url" id="logoUrl" name="logoUrl" placeholder="Enter Logo URL">
-</div>
-
-<div class="input-group">
-  <!-- Zip Code -->
-  <label for="zipInput">Zip Code:</label>
-  <input type="text" id="zipInput" value="10931" name="zipInput">
-</div>
-
-<div class="input-group">
-  <!-- Date Input -->
-  <label for="date">Enter a Friday Date (defaults to the next Friday) (YYYY-MM-DD):</label>
-  <input type="date" id="date" name="date" required>
-</div>
-
-<div class="input-group">
-  <!-- Shabbos Shachris Time -->
-  <label for="shabbosShachrisInput">Shabbos Shachris Time:</label>
-  <input type="time" id="shabbosShachrisInput" value="08:30" name="shabbosShachrisInput">
-</div>
-
-
-
-
-
-
-
-<div class="input-group">
-  <!-- Shabbos Mincha Time -->
-  <label for="shabbosMinchaInput">Shabbos Mincha (Min before Shkia):</label>
-  <input type="number" id="shabbosMinchaInput" value="40" name="shabbosMinchaInput">
-</div>
-
-
-
-
-
-<div class="nested-input-group" id="shabbosLearningTime" style="display: none;">
-  <!-- Shabbos Learning Time -->
-  <label for="shabbosLearningInput">Shabbos Learning (Min before Mincha):</label>
-  <input type="number" id="shabbosLearningInput" value="30" name="shabbosLearningInput">
-</div>
-
-
-
-
-
-<div class="nested-input-group" id="halachaMinutes" style="display: none;">
-  <!-- Halacha Shiur Header -->
-  <label for="halachaShiurHeaderInput">Shabbos Shiur Name:</label>
-  <input type="text" id="halachaShiurHeaderInput" value="Halacha Shiur" name="halachaShiurHeaderInput">
-
-  <!-- Halacha Shiur Time -->
-  <label for="halachaShiurTimeInput">Shabbos Shiur Time:</label>
-  <input type="time" id="halachaShiurTimeInput" value="16:45" name="halachaShiurTimeInput">
-</div>
-
-<div class="nested-input-group" id="naviMinutes" style="display: none;">
-  <!-- Navi Minutes Input -->
-  <label for="naviMinutesInput">Minutes before Maariv for Navi (rounded up to the nearest 5-minute mark):</label>
-  <input type="number" id="naviMinutesInput" value="25" name="naviMinutesInput">
-</div>
-
-    <hr>
-	
-	
-	<!-- Parsha Summary Input -->
-	<div id="parshaSummary" style="display: none;">
-	  <label for="parshaSummary">Parsha Vort:</label>
-	  <textarea class="tinymce" name="parshaSummary" rows="4" cols="50"></textarea>
-	</div>
-
-	<!-- Mazeltov Input -->
-	<div id="mazeltov" style="display: none;">
-	  <label for="mazeltov">Mazel Tov's:</label>
-	  <textarea class="tinymce" name="mazeltov" rows="4" cols="50"></textarea>
-	</div>
-
-	<!-- Events Input -->
-	<div id="events" style="display: none;">
-	  <label for="events">Events:</label>
-	  <textarea class="tinymce" name="events" rows="4" cols="50"></textarea>
-	</div>
-	
-	<!-- Kiddush Input -->
-	<div id="kiddush" style="display: none;">
-	  <label for="kiddush">Kiddush:</label>
-	  <textarea class="tinymce" name="kiddush" rows="4" cols="50"></textarea>
-	</div>
-	
-	<div id="kollel" style="display: none;">
-	  <label for="kollel">Kollel:</label>
-	  <textarea class="tinymce" name="kollel" rows="4" cols="50"></textarea>
-	</div>
-	
-	<div id="avosubanim" style="display: none;">
-	  <label for="avosubanim">Avos U'banim:</label>
-	  <textarea class="tinymce" name="avosubanim" rows="4" cols="50"></textarea>
-	</div>
-
-	<div id="bnos" style="display: none;">
-	  <label for="bnos">B'Nos:</label>
-	  <textarea class="tinymce" name="bnos" rows="4" cols="50"></textarea>
-	</div>
-	
-	<!-- Shiur Input -->
-	<div id="shiur" style="display: none;">
-	  <label for="shiur">Shiur:</label>
-	  <textarea class="tinymce" name="shiur" rows="4" cols="50"></textarea>
-	</div>
-
-    <button type="submit">Get Zmanim</button>
-  </form>
-  <!-- End Zmanim Form -->
 </body>
 </html>
